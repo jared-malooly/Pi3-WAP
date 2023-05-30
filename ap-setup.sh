@@ -5,6 +5,8 @@ read ssid
 echo PWD:
 read pwd
 
+sudo chmod +x onboot.sh
+
 #https://pimylifeup.com/raspberry-pi-wireless-access-point/
 sudo apt-get update
 sudo apt-get -y upgrade
@@ -72,7 +74,7 @@ sudo iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE
 sudo sh -c "iptables-save > /etc/iptables.ipv4.nat"
 
 echo "Editing rc.local"
-sudo sed -i '/^exit/i sudo hostapd /etc/hostapd/hostapd.conf & iptables-restore < /etc/iptables.ipv4.nat' /etc/rc.local
+sudo sed -i '/^exit/i sudo /home/$USER/Pi3-WAP/onboot.sh' /etc/rc.local
 
 sudo systemctl unmask hostapd
 sudo systemctl enable hostapd
